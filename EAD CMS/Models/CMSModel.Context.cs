@@ -27,6 +27,7 @@ namespace EAD_CMS.Models
     
         public virtual DbSet<assigned_course> assigned_course { get; set; }
         public virtual DbSet<assignment> assignments { get; set; }
+        public virtual DbSet<attendence> attendences { get; set; }
         public virtual DbSet<batch> batches { get; set; }
         public virtual DbSet<course> courses { get; set; }
         public virtual DbSet<degree> degrees { get; set; }

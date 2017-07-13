@@ -11,17 +11,17 @@ namespace EAD_CMS.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
+
     public partial class course
     {
-        public course()
-        {
-            this.assigned_course = new HashSet<assigned_course>();
-        }
-    
+
         public int id { get; set; }
+        [Required]
+        [DisplayName("Name")]
+        [Remote("isCourseExist", "Admin", HttpMethod = "Get", ErrorMessage = "Such Course already exists!")]
         public string name { get; set; }
-    
-        public virtual ICollection<assigned_course> assigned_course { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace EAD_CMS.Models
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
-    
+
     public partial class batch
     {
         public batch()
@@ -22,12 +22,12 @@ namespace EAD_CMS.Models
             this.students = new HashSet<student>();
             this.assigned_course = new HashSet<assigned_course>();
         }
-    
+
         [DisplayName("Batch")]
         [Required]
         [Remote("isBatchExist", "Admin", HttpMethod = "Get", ErrorMessage = "Such Batch already exists!")]
         public string name { get; set; }
-    
+
         public virtual ICollection<student> students { get; set; }
         public virtual ICollection<assigned_course> assigned_course { get; set; }
     }

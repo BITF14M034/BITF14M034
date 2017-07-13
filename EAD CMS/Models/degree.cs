@@ -12,7 +12,7 @@ namespace EAD_CMS.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    
+
     public partial class degree
     {
         public degree()
@@ -20,10 +20,10 @@ namespace EAD_CMS.Models
             this.students = new HashSet<student>();
             this.assigned_course = new HashSet<assigned_course>();
         }
-    
+
         [DisplayName("Degree")]
         public string title { get; set; }
-    
+
         public virtual ICollection<student> students { get; set; }
         public virtual ICollection<assigned_course> assigned_course { get; set; }
     }

@@ -17,7 +17,9 @@
         body {
             font-family: 'Century Gothic';
         }
-
+        td {
+            text-transform: uppercase;
+        }
         td, th {
             padding: 10px 10px;
             display: table-cell;
@@ -111,7 +113,7 @@
             @Html.ActionLink("Create New", "AddStudent")
         </p>
         <p class="left">
-            <a href=# onclick="append()">Search</a>
+            <a href="#a" onclick="append()">Search</a>
         </p>
         <p class="left">
             <a href="@Url.Action("AllStudents", "Admin")">Refresh</a>

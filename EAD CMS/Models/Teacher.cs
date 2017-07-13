@@ -14,24 +14,24 @@ namespace EAD_CMS.Models
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
-    
+
     public partial class Teacher
     {
         public Teacher()
         {
             this.assigned_course = new HashSet<assigned_course>();
         }
-    
+
 
         [DisplayName("Username")]
         [Required]
         [Remote("isExist", "Admin", HttpMethod = "Get", ErrorMessage = "Such username already exists!")]
         public string username { get; set; }
 
-        [DisplayName("Name")]
+        [DisplayName("Teacher's Name")]
         [Required]
         public string name { get; set; }
-    
+
         public virtual ICollection<assigned_course> assigned_course { get; set; }
     }
 }

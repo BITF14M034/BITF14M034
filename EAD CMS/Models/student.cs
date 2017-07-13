@@ -13,8 +13,8 @@ namespace EAD_CMS.Models
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-    
+    using System.Web.Mvc;
+
     public partial class student
     {
         public student()
@@ -27,10 +27,10 @@ using System.Web.Mvc;
 
         [DisplayName("Roll Number")]
         [Required]
-        [Remote("isExist", "Admin", HttpMethod = "Get", ErrorMessage="Such roll number already exists!")]
+        [Remote("isExist", "Admin", HttpMethod = "Get", ErrorMessage = "Such roll number already exists!")]
         public string rollno { get; set; }
         [Required]
-        [DisplayName("Name")]
+        [DisplayName("Student's Name")]
         public string name { get; set; }
 
         [DisplayName("Degree")]
@@ -52,6 +52,7 @@ using System.Web.Mvc;
         public virtual ICollection<final> finals { get; set; }
         public virtual ICollection<mid> mids { get; set; }
         public virtual ICollection<quiz> quizs { get; set; }
+        public virtual ICollection<attendence> attendences { get; set; }
         public IEnumerable<System.Web.Mvc.SelectListItem> batchList { get; set; }
         public IEnumerable<System.Web.Mvc.SelectListItem> degreeList { get; set; }
     }

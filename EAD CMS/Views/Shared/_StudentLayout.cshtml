@@ -7,18 +7,7 @@
 
     @Styles.Render("~/Content/StyleStudent.css")
 
-    <style>
-        .navbar a:hover{
-            background: #525252;
-            color: white;
-            border-radius: 3px;
-            box-shadow: 2px 15px 5px gray;
-        }
-        .studentinfo a:hover{
-            color:hotpink;
-        }
-    </style>
-
+    <link href="~/Content/Style.css" rel="stylesheet" />
 </head>
 <body>
     <div class="body">
@@ -32,26 +21,16 @@
                 <h2>PUNJAB UNIVERSITY COLLEGE OF INFORMATION TECHNOLOGY</h2>
             </div>
 
-            <div class="navBar">
-                <ul>
-                    <li><a href="@Url.Action("Student","Student")">HOME</a></li>
-                    <li><a href=#>NEWS & UPADATES</a></li>
-                    <li><a href=#>PERSONAL INFO</a></li>
-                    <li><a href="@Url.Action("About","Student")">ABOUT US</a></li>
-                </ul>
-            </div>
         </div>
-
-
         <div class="studentinfo">
             <img class="profpic" src="~/images/user.png" />
-            <p>
+            <p style="color:hotpink">
                 @Model.name
             </p>
-            <p><a href="#">Change Password</a></p>
-            @*<p><a href="@Url.Action("Login","Login")">Logout</a></p>*@
+            <p><a href="@Url.Action("ChangePassword", "Student")" target="contents">Change Password</a></p>
             <p>@Html.ActionLink("Logout", "Login", "Login")</p>
         </div>
+
 
         @RenderBody()
     </div>

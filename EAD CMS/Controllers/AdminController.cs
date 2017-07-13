@@ -15,7 +15,10 @@ namespace EAD_CMS.Controllers
         // GET: /Admin/
         public ActionResult Admin()
         {
-
+            if (Session["username"] == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
             return View();
         }
         public ActionResult RegisterStudent()
@@ -29,11 +32,17 @@ namespace EAD_CMS.Controllers
 
         public ActionResult ChangePassword(CMSEntities db)
         {
-            string uname = Session["username"].ToString();
-            login model = new login();
-            model = db.logins.Where(x => x.username == uname).FirstOrDefault();
+            if (Session["username"] != null)
+            {
+                string uname = Session["username"].ToString();
+                login model = new login();
+                model = db.logins.Where(x => x.username == uname).FirstOrDefault();
 
-            return View(model);
+
+                return View(model);
+            }
+            else
+                return View();
         }
         [HttpPost]
         public ActionResult ChangePassword(login lg)
@@ -87,6 +96,12 @@ namespace EAD_CMS.Controllers
             CMSEntities db = new CMSEntities();
             return View(db.Teachers.Where(model => model.name.Contains(key) || key == null).ToList());
         }
+        public ActionResult AssignedCourses(CMSEntities db)
+        {
+            List<assigned_course> model = db.assigned_course.ToList();
+
+            return View(model);
+        }
         public ActionResult AddStudent(CMSEntities db)
         {
 
@@ -112,6 +127,43 @@ namespace EAD_CMS.Controllers
             return View(model);
         }
 
+
+        public ActionResult AssignCourse(CMSEntities db)
+        {
+            assigned_course model = new assigned_course();
+            IEnumerable<SelectListItem> degList = db.degrees.Select(c => new SelectListItem
+            {
+                Value = c.title,
+                Text = c.title.ToUpper()
+
+            });
+
+            model.degreeList = degList;
+
+            IEnumerable<SelectListItem> batList = db.batches.Select(c => new SelectListItem
+            {
+                Value = c.name,
+                Text = c.name.ToUpper()
+
+            });
+            model.batchList = batList;
+
+            IEnumerable<SelectListItem> courseList = db.courses.Select(c => new SelectListItem
+            {
+                Value = c.name,
+                Text = c.name.ToUpper()
+            });
+            model.courseList = courseList;
+
+            IEnumerable<SelectListItem> tUnameList = db.Teachers.Select(c => new SelectListItem
+            {
+                Value = c.username,
+                Text = c.username
+            });
+            model.tUnameList = tUnameList;
+
+            return View(model);
+        }
         [HttpPost]
         public ActionResult AddStudent(student s)
         {
@@ -134,7 +186,30 @@ namespace EAD_CMS.Controllers
             else
                 return View();
         }
+        [HttpPost]
+        public ActionResult AssignCourse(assigned_course model)
+        {
+            if (ModelState.IsValid)
+            {
+                CMSEntities db = new CMSEntities();
 
+                var assCourse = db.assigned_course.Where(x => x.course == model.course && x.batch == model.batch && x.degree==model.degree).FirstOrDefault();
+
+                if (assCourse != null)
+                {
+                    return JavaScript("Error: Such course is already assigned to '" + assCourse.t_username + "'");
+                }
+                else
+                {
+                    db.assigned_course.Add(model);
+                    db.SaveChanges();
+                }
+                
+
+                return JavaScript("Course Assigned successfully!");
+            }
+            return View(model);
+        }
         public ActionResult AddTeacher(CMSEntities db)
         {
             Teacher model = new Teacher();

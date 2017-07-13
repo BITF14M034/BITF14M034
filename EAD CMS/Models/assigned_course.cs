@@ -11,7 +11,9 @@ namespace EAD_CMS.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class assigned_course
     {
         public assigned_course()
@@ -21,20 +23,35 @@ namespace EAD_CMS.Models
             this.mids = new HashSet<mid>();
             this.quizs = new HashSet<quiz>();
         }
-    
+
         public int Id { get; set; }
-        public int course_id { get; set; }
+        [Required]
+        [DisplayName("Course")]
+        public string course { get; set; }
+        [Required]
+        [DisplayName("Batch")]
         public string batch { get; set; }
+        [Required]
+        [DisplayName("Degree")]
         public string degree { get; set; }
+        [Required]
+        [DisplayName("Teacher's Username")]
         public string t_username { get; set; }
-    
+
         public virtual batch batch1 { get; set; }
-        public virtual course course { get; set; }
         public virtual degree degree1 { get; set; }
         public virtual Teacher Teacher { get; set; }
         public virtual ICollection<assignment> assignments { get; set; }
         public virtual ICollection<final> finals { get; set; }
         public virtual ICollection<mid> mids { get; set; }
         public virtual ICollection<quiz> quizs { get; set; }
+        public virtual ICollection<attendence> attendences { get; set; }
+
+        public IEnumerable<System.Web.Mvc.SelectListItem> courseList { get; set; }
+        public IEnumerable<System.Web.Mvc.SelectListItem> degreeList { get; set; }
+        public IEnumerable<System.Web.Mvc.SelectListItem> batchList { get; set; }
+        public IEnumerable<System.Web.Mvc.SelectListItem> tUnameList { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 }

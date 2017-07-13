@@ -1,14 +1,11 @@
 ﻿@model EAD_CMS.Models.Teacher
 
 @{
-    if (Session["username"] == null)
-    {
-        Response.Redirect("~/Login/Login");
-    }    
+    var db = new EAD_CMS.Models.CMSEntities();
+    List<EAD_CMS.Models.assigned_course> ass = db.assigned_course.Where(x => x.t_username == Model.username).ToList();
+    
 }
 
-
-<!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -27,27 +24,39 @@
             <h2>PUNJAB UNIVERSITY COLLEGE OF INFORMATION TECHNOLOGY</h2>
         </div>
 
-        <div class="navBar">
-            <ul>
-                <li><a href="@Url.Action("Teacher","Teacher")">HOME</a></li>
-                <li><a href=Controller?NewsUpdates>NEWS & UPADATES</a></li>
-                <li><a href=Controller?student>PERSONAL INFO</a></li>
-                <li><a href="@Url.Action("About","Teacher")">ABOUT US</a></li>
-            </ul>
-        </div>
+        
     </div>
 
 
     <div class="body">
         <div class="teacherinfo">
             <img class="profpic" src="~/images/user.png" />
-            <p>
+            <p style="color: hotpink">
                @Model.name
             </p>
-            <p><a href="#">Change Password</a></p>
+            <p><a href="@Url.Action("ChangePassword", "Teacher")" target="contents">Change Password</a></p>
             <p>@Html.ActionLink("Logout", "Login", "Login")</p>
         </div>
+
+        <div class="subjects">
+            <div class="heading">Subjects</div>
+            <dl>
+                @foreach (var item in ass)
+                {
+                    <dt>@Html.ActionLink(@item.course.ToUpper() + " " + @item.degree1.title.ToUpper() + " " + @item.batch1.name.ToUpper(), "AddAttendence", "Teacher", new { course = item.course, degree = item.degree1.title, batch = item.batch1.name }, new { target = "contents" })</dt>
+                    <dd></dd>
+                }
+            </dl>
+        </div>
+        <div class="contents">
+            <div class="heading">Contents</div>
+            <iframe id="iframe" name="contents"
+                    height="80"
+                    frameborder="0"></iframe>
+        </div>
+
     </div>
+
 
 </body>
 </html>

@@ -15,6 +15,9 @@
     <script src='@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")' type='text/javascript'></script>
 
     <style>
+        .field-validation-error{
+            color:red;
+        }
         body {
             font-family: 'Century Gothic';
         }
@@ -88,43 +91,42 @@
                 text-shadow: 5px 0px 10px #63B8FF;
             }
     </style>
+
 </head>
 <body>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm()) 
     {
         @Html.AntiForgeryToken()
-
+        
         <div class="form-horizontal">
-            <h2>Assign Course to Teacher</h2>
+            <h2>Assign Course</h2>
             <hr />
             @Html.ValidationSummary(true)
-
+    
             <div class="form-group">
                 @Html.LabelFor(model => model.course, "Course", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("course", Model.courseList)
+                    @Html.DropDownListFor(model => model.course, Model.courseList)
                     @Html.ValidationMessageFor(model => model.course)
                 </div>
             </div>
-
+    
             <div class="form-group">
                 @Html.LabelFor(model => model.batch, "Batch", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("batch", Model.batchList)
+                    @Html.DropDownListFor(model => model.batch, Model.batchList)
                     @Html.ValidationMessageFor(model => model.batch)
                 </div>
             </div>
-
+    
             <div class="form-group">
                 @Html.LabelFor(model => model.degree, "Degree", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("degree", Model.degreeList)
+                    @Html.DropDownListFor(model => model.degree, Model.degreeList)
                     @Html.ValidationMessageFor(model => model.degree)
                 </div>
             </div>
-
-
-
+    
             <div class="form-group">
                 @Html.LabelFor(model => model.t_username, "Teacher's Username", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -133,9 +135,13 @@
                 </div>
             </div>
 
+    
+            <label class="field-validation-error">@Html.DisplayFor(model => model.ErrorMessage)</label>
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="Create" class="btn btn-default" /> | 
+                    @Html.ActionLink("Back to List", "AssignedCourses")
                 </div>
             </div>
         </div>
